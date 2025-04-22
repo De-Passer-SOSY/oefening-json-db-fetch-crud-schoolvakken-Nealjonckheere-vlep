@@ -42,7 +42,6 @@ async function addles() {
         });
 
         if (response.ok) {
-            // Leeg het inputveld en vernieuw de lijst
             input.value = "";
             ophaallessen();
         }
@@ -52,6 +51,19 @@ async function addles() {
 }
 
 
+async function deleteVak(id) {
+    try {
+        let response = await fetch(`http://localhost:5688/vakken/${id}`, {
+            method: "DELETE"
+        });
+
+        if (response.ok) {
+            ophaallessen(); // vernieuw de lijst na verwijderen
+        }
+    } catch (err) {
+        console.error("Fout bij verwijderen:", err);
+    }
+}
 
 
 
@@ -59,19 +71,19 @@ async function addles() {
 
 
 
-function displaylessen(lessen) {
+function displayVakken(vakken) {
     let lijst = document.querySelector("#vakList");
     lijst.innerHTML = "";
 
-
-    lessen.forEach(les => {
+    // Loop over alle vakken
+    vakken.forEach(vak => {
         let li = document.createElement("li");
-        li.textContent = les.naam;
+        li.textContent = vak.naam;
 
 
         let deleteBtn = document.createElement("button");
         deleteBtn.textContent = "❌";
-        deleteBtn.addEventListener("click", () => deleteLes(les.id));
+        deleteBtn.addEventListener("click", () => deleteVak(vak.id));
 
         li.appendChild(deleteBtn);
         lijst.appendChild(li);
