@@ -10,3 +10,13 @@ function init() {
 
 
 
+async function ophaallessen(){
+    try {
+        let response = await fetch("http://localhost:5688/vakken");
+
+        let lessen = await response.json();
+
+    } catch (err) {
+        console.error("Fout:", err);
+    }
+}
